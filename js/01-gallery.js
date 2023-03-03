@@ -6,17 +6,36 @@ console.log(galleryItems);
 const galleryEl = document.querySelector(".gallery");
 console.log(galleryEl);
 
-const galleryMarkup = makeGalleryMurkup(galleryItems);
+const galleryMarkup = makeGalleryMarkup(galleryItems);
 
-galleryEl.insertAdjacentHTML("beforeend", galleryMarkup);
+galleryEl.addEventListener("click", atGallery);
 
-galleryEl.addEventListener("click", atGalleryClick);
-
-function atGalleryClick(evt) {
+function atGallery(evt) {
   evt.preventDefault();
-  const isImage = evt.target.classList.contains("gallery__image");
-  if (!isImage) {
+  const itImg = evt.target.classList.contains("gallery__image");
+  if (!itImg) {
     return;
   }
-  const largeImageURL = evt.target.dataset.sourse;
+  const largeImage = evt.target.dataset.source;
+  const example = makeLightboxExample(largeImage);
+  example.show();
 }
+function makeLightboxExample(URL) {
+  return basicLightbox.create(`<img width="1280" height="800" src="${URL}">`);
+}
+function makeGalleryMarkup(gallery) {
+  return gallery.map((item) => makeItemMarkup(item)).join("");
+}
+function makeItemMarkup({ preview, original, description }) {
+  return `<div class="gallery__item">
+    <a class="gallery__link" href="large-image.jpg">
+      <img
+        class="gallery__image"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
+      />
+    </a>
+  </div>`;
+}
+galleryEl.insertAdjacentHTML("beforeend", galleryMarkup);

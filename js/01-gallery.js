@@ -17,8 +17,8 @@ function atGallery(evt) {
     return;
   }
   const largeImage = evt.target.dataset.source;
-  const example = makeLightboxExample(largeImage);
-  example.show();
+  const instance = makeLightboxExample(largeImage);
+  instance.show();
 }
 function makeLightboxExample(URL) {
   return basicLightbox.create(`<img width="1280" height="800" src="${URL}">`);
